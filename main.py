@@ -16,6 +16,12 @@ ENTRY = (
     "the site is gone, and the TTL keeps it gone for 24 hours."
 )
 
+# The gate: /output/entry.txt must be UTF-8 text of 1 to 200 characters,
+# a single line, not only white space. Refuse to write anything else
+# rather than silently submitting an invalid entry.
+assert 1 <= len(ENTRY) <= 200, "entry must be 1-200 characters"
+assert "\n" not in ENTRY and ENTRY.strip(), "entry must be one non-blank line"
+
 
 def main():
     out_dir = os.environ.get("OUTPUT_DIR", "/output")
